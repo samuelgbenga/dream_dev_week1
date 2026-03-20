@@ -7,6 +7,15 @@ public class Kata {
 
         System.out.println(isPalindrome(40004));
 
+        System.out.println(isPrimeNumber(40004));
+        System.out.println(isEven(40004));
+        System.out.println(subtract(40, 300));
+        System.out.println(divide(40004,500));
+        System.out.println(factorOf(40004));
+        System.out.println(isSquare(40004));
+        System.out.println(factorialOf(40004));
+        System.out.println(squareOf(40004));
+
     }
 
     public static boolean isEven(int number) {
@@ -80,5 +89,9 @@ public class Kata {
         }
 
         return result;
+    }
+
+    public static long squareOf(int number) {
+        return (long) number * number;
     }
 }
