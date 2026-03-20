@@ -5,7 +5,7 @@ public class Kata {
     public static void main(String[] args) {
         System.out.println("Hello World");
 
-        System.out.println(isSquare(400));
+        System.out.println(isPalindrome(40004));
 
     }
 
@@ -53,5 +53,32 @@ public class Kata {
         }
 
         return false;
+    }
+
+    public static boolean isPalindrome(int number) {
+
+        if (number < 10000 || number > 99999) {
+            return false;
+        }
+
+        int first = number / 10000;
+        int second = (number / 1000) % 10;
+        int fourth = (number / 10) % 10;
+        int fifth = number % 10;
+
+        return first == fifth && second == fourth;
+    }
+
+    public static long factorialOf(int number) {
+        if (number < 0) {
+            return 0;
+        }
+
+        long result = 1;
+        for (int i = 2; i <= number; i++) {
+            result *= i;
+        }
+
+        return result;
     }
 }
