@@ -6,9 +6,20 @@ import java.time.format.DateTimeFormatter;
 public class CheckoutSystem {
 
     public static void main(String[] args) {
-        String[] products = {"Parfait", "Rice"};
-        long[] prices = {2100, 550};
-        int[] quantities = {2, 2};
+
+        final double VAT_PERCENTAGE = 7.5;
+        String customerName, cashierName;
+        String[] products =  new String[2];
+        double[] prices = new double[2];
+        int[] quantities = new int[2];
+        int enterDiscount;
+
+        products[0] = "Parfait";
+        products[1] = "Rice";
+        prices[0] = 2100;
+        prices[1] = 550;
+        quantities[0] = 2;
+        quantities[1] = 2;
 
         String checkout = checkoutTemplate(
                 "Chukwuma Adekunle Ciroma",
@@ -37,22 +48,22 @@ public class CheckoutSystem {
     private static String checkoutTemplate(
             String customerName,
             String cashierName,
-            long discount,
+            double discount,
             String[] product,
-            long[] productPrice,
+            double[] productPrice,
             int[] productQuantity,
-            long vat
+            double vat
     ) {
 
-        long subTotal = 0;
+        double subTotal = 0;
 
         StringBuilder items = new StringBuilder();
         for (int i = 0; i < product.length; i++) {
-            long total = productPrice[i] * productQuantity[i];
+            double total = productPrice[i] * productQuantity[i];
             subTotal += total;
 
             items.append(String.format(
-                    "%-10s %5d %10d %10d%n",
+                    "%-10s %5d %10.2f %10.2f%n",
                     product[i],
                     productQuantity[i],
                     productPrice[i],
@@ -60,7 +71,7 @@ public class CheckoutSystem {
             ));
         }
 
-        long billTotal = subTotal - discount + vat;
+        double billTotal = subTotal - discount + vat;
 
         return String.format("""
             SEMICOLON STORES
@@ -75,13 +86,13 @@ public class CheckoutSystem {
             --------------------------------------------
             %s
             --------------------------------------------
-            Sub Total:     %d
-            Discount:      %d
-            VAT:           %d
+            Sub Total:     %.2f
+            Discount:      %.2f
+            VAT:           %.2f
             ============================================
-            Bill Total:    %d
+            Bill Total:    %.2f
             ============================================
-            THIS IS NOT A RECEIPT KINDLY PAY %d
+            THIS IS NOT A RECEIPT KINDLY PAY %.2f
             """,
                 getLocalDateString(),
                 cashierName,
@@ -98,24 +109,24 @@ public class CheckoutSystem {
     private static String receiptTemplate(
             String customerName,
             String cashierName,
-            long discount,
+            double discount,
             String[] product,
-            long[] productPrice,
+            double[] productPrice,
             int[] productQuantity,
-            long vat,
-            long amountPaid,
-            long balance
+            double vat,
+            double amountPaid,
+            double balance
     ) {
 
-        long subTotal = 0;
+        double subTotal = 0;
 
         StringBuilder items = new StringBuilder();
         for (int i = 0; i < product.length; i++) {
-            long total = productPrice[i] * productQuantity[i];
+            double total = productPrice[i] * productQuantity[i];
             subTotal += total;
 
             items.append(String.format(
-                    "%-10s %5d %10d %10d%n",
+                    "%-10s %5d %10.2f %10.2f%n",
                     product[i],
                     productQuantity[i],
                     productPrice[i],
@@ -123,7 +134,7 @@ public class CheckoutSystem {
             ));
         }
 
-        long billTotal = subTotal - discount + vat;
+        double billTotal = subTotal - discount + vat;
 
         return String.format("""
             SEMICOLON STORES
@@ -138,13 +149,13 @@ public class CheckoutSystem {
             --------------------------------------------
             %s
             --------------------------------------------
-            Sub Total:     %d
-            Discount:      %d
-            VAT:           %d
+            Sub Total:     %.2f
+            Discount:      %.2f
+            VAT:           %.2f
             ============================================
-            Bill Total:     %d
-            Amount Paid:    %d
-            Balance:        %d
+            Bill Total:     %.2f
+            Amount Paid:    %.2f
+            Balance:        %.2f
             ============================================
             THANK YOU FOR YOUR PATRONAGE
             """,
