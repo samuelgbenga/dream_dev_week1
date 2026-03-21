@@ -1,5 +1,6 @@
 package checkoutsystem;
 
+import java.util.Arrays;
 import java.util.Scanner;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -30,66 +31,35 @@ public class CheckoutSystem {
             yesOrNo = input.nextLine();
         } while (yesOrNo.equalsIgnoreCase("yes"));
 
-        System.out.println(customerName);
-        System.out.println(products[0]);
-        System.out.println(prices[0]);
-        System.out.println(quantities[0]);
+        getFinalSizeOfAllArray();
+
+        System.out.println("What your Name? ");
+        cashierName = input.nextLine();
+
+        System.out.println("How much discount will he/she get? ");
+        enterDiscount = Integer.parseInt(input.nextLine());
 
 
-
-//        products[0] = "Parfait";
-//        products[1] = "Rice";
-//        prices[0] = 2100;
-//        prices[1] = 550;
-//        quantities[0] = 2;
-//        quantities[1] = 2;
-//
-//        String checkout = checkoutTemplate(
-//                "Chukwuma Adekunle Ciroma",
-//                "John Doe",
-//                424,
-//                products,
-//                prices,
-//                quantities,
-//                927
-//        );
-//
-//        String receipt = receiptTemplate(
-//                "Chukwuma Adekunle Ciroma",
-//                "John Doe",
-//                424,
-//                products,
-//                prices,
-//                quantities,
-//                927,
-//                2100,
-//                550
-//        );
-//        System.out.println(receipt);
+        System.out.println(checkoutTemplate(400, 900));
     }
 
     private static String checkoutTemplate(
-            String customerName,
-            String cashierName,
             double discount,
-            String[] product,
-            double[] productPrice,
-            int[] productQuantity,
             double vat
     ) {
 
         double subTotal = 0;
 
         StringBuilder items = new StringBuilder();
-        for (int i = 0; i < product.length; i++) {
-            double total = productPrice[i] * productQuantity[i];
+        for (int i = 0; i < products.length; i++) {
+            double total = prices[i] * quantities[i];
             subTotal += total;
 
             items.append(String.format(
                     "%-10s %5d %10.2f %10.2f%n",
-                    product[i],
-                    productQuantity[i],
-                    productPrice[i],
+                    products[i],
+                    quantities[i],
+                    prices[i],
                     total
             ));
         }
@@ -130,12 +100,7 @@ public class CheckoutSystem {
     }
 
     private static String receiptTemplate(
-            String customerName,
-            String cashierName,
             double discount,
-            String[] product,
-            double[] productPrice,
-            int[] productQuantity,
             double vat,
             double amountPaid,
             double balance
@@ -144,15 +109,15 @@ public class CheckoutSystem {
         double subTotal = 0;
 
         StringBuilder items = new StringBuilder();
-        for (int i = 0; i < product.length; i++) {
-            double total = productPrice[i] * productQuantity[i];
+        for (int i = 0; i < products.length; i++) {
+            double total = prices[i] * quantities[i];
             subTotal += total;
 
             items.append(String.format(
                     "%-10s %5d %10.2f %10.2f%n",
-                    product[i],
-                    productQuantity[i],
-                    productPrice[i],
+                    products[i],
+                    quantities[i],
+                    prices[i],
                     total
             ));
         }
@@ -198,7 +163,9 @@ public class CheckoutSystem {
 
     private static void takeInput(int counter){
 
-
+        if(products.length - counter < 1) {
+            updateAllArraySize();
+        }
 
         System.out.println("What did the user buy?");
         products[counter] = input.nextLine();
@@ -218,4 +185,112 @@ public class CheckoutSystem {
 
         return now.format(formatter);
     }
+
+    private static int[] getNewArray(int[] oldArray) {
+        int[] newArray = new int[oldArray.length+5];
+
+        for (int i = 0; i < oldArray.length; i++) {
+            newArray[i] = oldArray[i];
+        }
+
+        return newArray;
+    }
+
+    private static String[] getNewArray(String[] oldArray) {
+        String[] newArray = new String[oldArray.length+5];
+
+        for (int i = 0; i < oldArray.length; i++) {
+            newArray[i] = oldArray[i];
+        }
+
+        return newArray;
+    }
+
+    private static double[] getNewArray(double[] oldArray) {
+        double[] newArray = new double[oldArray.length+5];
+
+        for (int i = 0; i < oldArray.length; i++) {
+            newArray[i] = oldArray[i];
+        }
+
+        return newArray;
+    }
+    
+    private static int getActualSizeWithoutZeros(int[] oldArray) {
+        int count = 0;
+
+        for (int i : oldArray) {
+            if(i == 0) continue;
+            count++;
+        }
+        return count;
+    }
+
+    private static int getActualSizeWithoutZeros(double[] oldArray) {
+        int count = 0;
+
+        for (double i : oldArray) {
+            if (Math.abs(i) < 1e-9) continue;
+            count++;
+        }
+        return count;
+    }
+
+    private static int getActualSizeWithoutZeros(String[] oldArray) {
+        int count = 0;
+
+        for (String s : oldArray) {
+            if (s == null || s.trim().isEmpty()) continue;
+            count++;
+        }
+        return count;
+    }
+
+
+    private static int[] getActualSizeArray(int[] oldArray, int actualSize) {
+        int[] newArray = new int[actualSize];
+
+        for (int i = 0; i < newArray.length; i++) {
+            newArray[i] = oldArray[i];
+        }
+
+        return newArray;
+    }
+
+    private static String[] getActualSizeArray(String[] oldArray, int actualSize) {
+        String[] newArray = new String[actualSize];
+
+        for (int i = 0; i < newArray.length; i++) {
+            newArray[i] = oldArray[i];
+        }
+
+        return newArray;
+    }
+
+    private static double[] getActualSizeArray(double[] oldArray, int actualSize) {
+        double[] newArray = new double[actualSize];
+
+        for (int i = 0; i < newArray.length; i++) {
+            newArray[i] = oldArray[i];
+        }
+
+        return newArray;
+    }
+
+    private static void updateAllArraySize(){
+        products = getNewArray(products);
+        prices = getNewArray(prices);
+        quantities = getNewArray(quantities);
+
+    }
+
+    private static void getFinalSizeOfAllArray(){
+        int actualSizeOfProductsWithoutZeros = getActualSizeWithoutZeros(products);
+        int actualSizeOfPricesWithoutZeros = getActualSizeWithoutZeros(prices);
+        int actualSizeOfQuantitiesWithoutZeros = getActualSizeWithoutZeros(quantities);
+        products = getActualSizeArray( products,  actualSizeOfProductsWithoutZeros);
+        prices = getActualSizeArray( prices,  actualSizeOfPricesWithoutZeros);
+        quantities = getActualSizeArray( quantities,  actualSizeOfQuantitiesWithoutZeros);
+    }
+
 }

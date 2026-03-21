@@ -235,7 +235,7 @@ public class ArrayKata {
         return newArray;
     }
 
-    public static int getActualSizeWithoutZeros(int[] oldArray) {
+    private static int getActualSizeWithoutZeros(int[] oldArray) {
         int count = 0;
 
         for (int i : oldArray) {
@@ -245,7 +245,7 @@ public class ArrayKata {
         return count;
     }
 
-    public static int[] getActualSizeArray(int[] oldArray, int actualSize) {
+    private static int[] getActualSizeArray(int[] oldArray, int actualSize) {
         int[] newArray = new int[actualSize];
 
         for (int i = 0; i < newArray.length; i++) {
