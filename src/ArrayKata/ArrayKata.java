@@ -3,7 +3,9 @@ package ArrayKata;
 public class ArrayKata {
     public static void main(String[] args) {
         int[] array = {1, 2, 3, 4, 5};
-        System.out.println(array[0]);
+        System.out.println(maximumIn(array));
+        System.out.println(minimumIn(array));
+        System.out.println(sumOf(array));
     }
 
 
@@ -37,6 +39,20 @@ public class ArrayKata {
         }
 
         return min;
+    }
+
+    public static int sumOf(int[] arr) {
+        if (arr == null) {
+            return 0;
+        }
+
+        int sum = 0;
+
+        for (int num : arr) {
+            sum += num;
+        }
+
+        return sum;
     }
 }
 
