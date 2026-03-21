@@ -1,48 +1,71 @@
 package checkoutsystem;
 
+import java.util.Scanner;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class CheckoutSystem {
+    static Scanner input = new Scanner(System.in);
+    static final double VAT_PERCENTAGE = 7.5;
+    static String customerName, cashierName;
+    static String[] products =  new String[2];
+    static double[] prices = new double[2];
+    static int[] quantities = new int[2];
+    static int enterDiscount;
+
 
     public static void main(String[] args) {
 
-        final double VAT_PERCENTAGE = 7.5;
-        String customerName, cashierName;
-        String[] products =  new String[2];
-        double[] prices = new double[2];
-        int[] quantities = new int[2];
-        int enterDiscount;
 
-        products[0] = "Parfait";
-        products[1] = "Rice";
-        prices[0] = 2100;
-        prices[1] = 550;
-        quantities[0] = 2;
-        quantities[1] = 2;
+        System.out.println("What is the Customer's name");
+        customerName = input.nextLine();
 
-        String checkout = checkoutTemplate(
-                "Chukwuma Adekunle Ciroma",
-                "John Doe",
-                424,
-                products,
-                prices,
-                quantities,
-                927
-        );
 
-        String receipt = receiptTemplate(
-                "Chukwuma Adekunle Ciroma",
-                "John Doe",
-                424,
-                products,
-                prices,
-                quantities,
-                927,
-                2100,
-                550
-        );
-        System.out.println(receipt);
+        String yesOrNo;
+        int counter = 0;
+        do {
+            takeInput(counter);
+            counter++;
+            System.out.println("Add more items? ");
+            yesOrNo = input.nextLine();
+        } while (yesOrNo.equalsIgnoreCase("yes"));
+
+        System.out.println(customerName);
+        System.out.println(products[0]);
+        System.out.println(prices[0]);
+        System.out.println(quantities[0]);
+
+
+
+//        products[0] = "Parfait";
+//        products[1] = "Rice";
+//        prices[0] = 2100;
+//        prices[1] = 550;
+//        quantities[0] = 2;
+//        quantities[1] = 2;
+//
+//        String checkout = checkoutTemplate(
+//                "Chukwuma Adekunle Ciroma",
+//                "John Doe",
+//                424,
+//                products,
+//                prices,
+//                quantities,
+//                927
+//        );
+//
+//        String receipt = receiptTemplate(
+//                "Chukwuma Adekunle Ciroma",
+//                "John Doe",
+//                424,
+//                products,
+//                prices,
+//                quantities,
+//                927,
+//                2100,
+//                550
+//        );
+//        System.out.println(receipt);
     }
 
     private static String checkoutTemplate(
@@ -170,6 +193,21 @@ public class CheckoutSystem {
                 amountPaid,
                 balance
         );
+    }
+
+
+    private static void takeInput(int counter){
+
+
+
+        System.out.println("What did the user buy?");
+        products[counter] = input.nextLine();
+
+        System.out.println("How many pieces?");
+        quantities[counter] = Integer.parseInt(input.nextLine());
+
+        System.out.println("How much per unit?");
+        prices[counter] = Double.parseDouble(input.nextLine());
     }
 
     private static String getLocalDateString(){
