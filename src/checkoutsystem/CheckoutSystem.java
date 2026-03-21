@@ -7,12 +7,13 @@ import java.time.format.DateTimeFormatter;
 
 public class CheckoutSystem {
     static Scanner input = new Scanner(System.in);
-    static final double VAT_PERCENTAGE = 7.5;
+    static final double VAT_PERCENTAGE = 17.5;
     static String customerName, cashierName;
     static String[] products =  new String[2];
     static double[] prices = new double[2];
     static int[] quantities = new int[2];
     static int enterDiscount;
+    static double amountPaid;
 
 
     public static void main(String[] args) {
@@ -40,13 +41,15 @@ public class CheckoutSystem {
         enterDiscount = Integer.parseInt(input.nextLine());
 
 
-        System.out.println(checkoutTemplate(400, 900));
+        System.out.println(checkoutTemplate());
+
+        System.out.println("How much did the customer give you? ");
+        amountPaid = Double.parseDouble(input.nextLine());
+
+        System.out.println(receiptTemplate());
     }
 
-    private static String checkoutTemplate(
-            double discount,
-            double vat
-    ) {
+    private static String checkoutTemplate() {
 
         double subTotal = 0;
 
@@ -64,6 +67,8 @@ public class CheckoutSystem {
             ));
         }
 
+        double discount =  calculateTotalWithDiscount(enterDiscount, subTotal);
+        double vat =  calculateTotalWithVAT(subTotal);
         double billTotal = subTotal - discount + vat;
 
         return String.format("""
@@ -81,7 +86,7 @@ public class CheckoutSystem {
             --------------------------------------------
             Sub Total:     %.2f
             Discount:      %.2f
-            VAT:           %.2f
+            VAT @ %.2f%%:  %.2f
             ============================================
             Bill Total:    %.2f
             ============================================
@@ -93,6 +98,7 @@ public class CheckoutSystem {
                 items,
                 subTotal,
                 discount,
+                VAT_PERCENTAGE,
                 vat,
                 billTotal,
                 billTotal
@@ -100,10 +106,6 @@ public class CheckoutSystem {
     }
 
     private static String receiptTemplate(
-            double discount,
-            double vat,
-            double amountPaid,
-            double balance
     ) {
 
         double subTotal = 0;
@@ -121,9 +123,10 @@ public class CheckoutSystem {
                     total
             ));
         }
-
+        double discount =  calculateTotalWithDiscount(enterDiscount, subTotal);
+        double vat =  calculateTotalWithVAT(subTotal);
         double billTotal = subTotal - discount + vat;
-
+        double balance = amountPaid - billTotal;
         return String.format("""
             SEMICOLON STORES
             MAIN BRANCH
@@ -139,7 +142,7 @@ public class CheckoutSystem {
             --------------------------------------------
             Sub Total:     %.2f
             Discount:      %.2f
-            VAT:           %.2f
+            VAT @ %.2f%%:  %.2f
             ============================================
             Bill Total:     %.2f
             Amount Paid:    %.2f
@@ -153,6 +156,7 @@ public class CheckoutSystem {
                 items,
                 subTotal,
                 discount,
+                VAT_PERCENTAGE,
                 vat,
                 billTotal,
                 amountPaid,
@@ -293,4 +297,11 @@ public class CheckoutSystem {
         quantities = getActualSizeArray( quantities,  actualSizeOfQuantitiesWithoutZeros);
     }
 
+    public static double calculateTotalWithVAT(double amount) {
+        return (VAT_PERCENTAGE / 100) * amount;
+    }
+
+    public static double calculateTotalWithDiscount(int discount, double amount) {
+        return ((double) discount / 100) * amount;
+    }
 }
