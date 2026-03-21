@@ -7,6 +7,7 @@ public class StudentManagement {
 
     static int numberOfStudents = 4;
     static int numberOfSubjects = 3;
+    static final int PASS_MARK = 50;
 
     public static void main(String[] args) {
 
@@ -24,9 +25,9 @@ public class StudentManagement {
         double[] studentAverageScore = calculateAverages(scores);
         int[] totalStudentScore = calculateTotals(scores);
         int[] studentsPosition = calculatePositions(totalStudentScore);
-
-
         fillStudentNames(studentArr);
+        int[][] transposeScore = transpose(scores);
+
 
         System.out.println(Arrays.toString(studentArr));
 
@@ -44,6 +45,8 @@ public class StudentManagement {
         );
 
         System.out.println(result);
+
+        loopThroughTheScore(transposeScore);
     }
 
 
@@ -179,7 +182,7 @@ public class StudentManagement {
             int numberOfFail
     ) {
         return String.format("""
-            Subject SUB%d
+            Subject %d
             Highest Scoring Student is: %s scoring %d
             Lowest Scoring Student is: %s scoring %d
             Total Score is: %d
@@ -200,8 +203,92 @@ public class StudentManagement {
     }
 
     private static void loopThroughTheScore(int[][] array) {
+
+        System.out.println("SUBJECT SUMMARY");
+
         for (int i = 0; i < array.length; i++) {
-            System.out.println("Row " + i + ": " + Arrays.toString(array[i]));
+
+            int subjectNumber = i + 1;
+            int[] scores = array[i];
+
+            String report = buildSubjectReport(
+                    subjectNumber,
+                    getHighestStudent(scores),
+                    getHighestScore(scores),
+                    getLowestStudent(scores),
+                    getLowestScore(scores),
+                    getTotalScore(scores),
+                    getAverageScore(scores),
+                    getNumberOfPasses(scores),
+                    getNumberOfFails(scores)
+            );
+
+            System.out.println(report);
         }
+    }
+
+    private static int getHighestScore(int[] scores) {
+        int max = scores[0];
+        for (int score : scores) {
+            if (score > max) max = score;
+        }
+        return max;
+    }
+
+    private static String getHighestStudent(int[] scores) {
+        int max = getHighestScore(scores);
+        for (int i = 0; i < scores.length; i++) {
+            if (scores[i] == max) {
+                return "Student " + (i + 1);
+            }
+        }
+        return "N/A";
+    }
+
+    private static int getLowestScore(int[] scores) {
+        int min = scores[0];
+        for (int score : scores) {
+            if (score < min) min = score;
+        }
+        return min;
+    }
+
+    private static String getLowestStudent(int[] scores) {
+        int min = getLowestScore(scores);
+        for (int i = 0; i < scores.length; i++) {
+            if (scores[i] == min) {
+                return "Student " + (i + 1);
+            }
+        }
+        return "N/A";
+    }
+
+    private static int getTotalScore(int[] scores) {
+        int total = 0;
+        for (int score : scores) {
+            total += score;
+        }
+        return total;
+    }
+
+    private static double getAverageScore(int[] scores) {
+        int total = getTotalScore(scores);
+        return (double) total / scores.length;
+    }
+
+    private static int getNumberOfPasses(int[] scores) {
+        int count = 0;
+        for (int score : scores) {
+            if (score >= PASS_MARK) count++;
+        }
+        return count;
+    }
+
+    private static int getNumberOfFails(int[] scores) {
+        int count = 0;
+        for (int score : scores) {
+            if (score < PASS_MARK) count++;
+        }
+        return count;
     }
 }
