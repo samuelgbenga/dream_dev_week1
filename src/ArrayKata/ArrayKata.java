@@ -19,6 +19,7 @@ public class ArrayKata {
         System.out.println(Arrays.toString(oddNumbersIn(array1)));
         System.out.println(Arrays.toString(evenNumbersIn(array2)));
         System.out.println(Arrays.toString(oddNumbersIn(array2)));
+        System.out.println(Arrays.toString(squareNumbersIn(array2)));
     }
 
 
@@ -201,7 +202,30 @@ public class ArrayKata {
 
         return getActualSizeArray(result ,getActualSizeWithoutZeros(result));
     }
-    public static int[] getNewArray(int[] oldArray) {
+
+    public static int[] squareNumbersIn(int[] arr) {
+        int[] result = new int[5];
+
+        if (arr == null) {
+            return result;
+        }
+
+        int count = 0;
+
+        for (int j : arr) {
+            if (isSquare(j)) {
+                result[count] = j;
+                count++;
+            }
+            if((result.length - count) < 1) {
+                result = getNewArray(result);
+            };
+        }
+
+        return getActualSizeArray(result ,getActualSizeWithoutZeros(result));
+    }
+
+    private static int[] getNewArray(int[] oldArray) {
         int[] newArray = new int[oldArray.length+5];
 
         for (int i = 0; i < oldArray.length; i++) {
@@ -229,6 +253,17 @@ public class ArrayKata {
         }
 
         return newArray;
+    }
+
+
+    private static boolean isSquare(int number) {
+        if (number < 0) return false;
+
+        for (int i = 0; i <= Math.sqrt(number); i++) {
+            if (i * i == number) return true;
+        }
+
+        return false;
     }
 }
 

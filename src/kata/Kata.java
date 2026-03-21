@@ -13,6 +13,7 @@ public class Kata {
         System.out.println(divide(40004,500));
         System.out.println(factorOf(40004));
         System.out.println(isSquare(40004));
+        System.out.println(isSquare(50004));
         System.out.println(factorialOf(40004));
         System.out.println(squareOf(40004));
 
@@ -54,7 +55,7 @@ public class Kata {
         return count;
     }
 
-    public static boolean isSquare(int number) {
+    private static boolean isSquare(int number) {
         if (number < 0) return false;
 
         for (int i = 0; i <= Math.sqrt(number); i++) {
