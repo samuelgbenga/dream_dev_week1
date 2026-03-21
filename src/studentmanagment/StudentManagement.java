@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class StudentManagement {
 
 
-    static int numberOfStudents = 3;
+    static int numberOfStudents = 4;
     static int numberOfSubjects = 3;
 
     public static void main(String[] args) {
@@ -14,6 +14,7 @@ public class StudentManagement {
         int[][] scores = {
                 {1, 2, 4},
                 {3, 2, 1},
+                {5, 2, 4},
                 {5, 2, 4}
         };
 
@@ -22,13 +23,14 @@ public class StudentManagement {
         String[] studentArr = new String[numberOfStudents];
         double[] studentAverageScore = calculateAverages(scores);
         int[] totalStudentScore = calculateTotals(scores);
+        int[] studentsPosition = calculatePositions(totalStudentScore);
 
 
         fillStudentNames(studentArr);
 
         System.out.println(Arrays.toString(studentArr));
 
-        // These are PRE-CALCULATED (just dummy for now)
+
         int[] totals = {7, 6, 11};
         double[] averages = {2.33, 2.00, 3.67};
         int[] positions = {2, 3, 1};
@@ -38,7 +40,7 @@ public class StudentManagement {
                 scores,
                 totalStudentScore,
                 studentAverageScore,
-                positions
+                studentsPosition
         );
 
         System.out.println(result);
@@ -131,7 +133,7 @@ public class StudentManagement {
     }
 
 
-    private static int[] calculatePositions(double[] averages) {
+    private static int[] calculatePositions(int[] averages) {
         int n = averages.length;
         int[] positions = new int[n];
 
@@ -148,5 +150,58 @@ public class StudentManagement {
         }
 
         return positions;
+    }
+
+    private static int[][] transpose(int[][] original) {
+        int rows = original.length;
+        int cols = original[0].length;
+
+        int[][] flipped = new int[cols][rows];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                flipped[j][i] = original[i][j];
+            }
+        }
+
+        return flipped;
+    }
+
+    private static String buildSubjectReport(
+            int subjectNumber,
+            String highestStudent,
+            int highestScore,
+            String lowestStudent,
+            int lowestScore,
+            int totalScore,
+            double averageScore,
+            int numberOfPass,
+            int numberOfFail
+    ) {
+        return String.format("""
+            Subject SUB%d
+            Highest Scoring Student is: %s scoring %d
+            Lowest Scoring Student is: %s scoring %d
+            Total Score is: %d
+            Average Score is: %.2f
+            Number of Passes: %d
+            Number of Fails: %d
+            """,
+                subjectNumber,
+                highestStudent,
+                highestScore,
+                lowestStudent,
+                lowestScore,
+                totalScore,
+                averageScore,
+                numberOfPass,
+                numberOfFail
+        );
+    }
+
+    private static void loopThroughTheScore(int[][] array) {
+        for (int i = 0; i < array.length; i++) {
+            System.out.println("Row " + i + ": " + Arrays.toString(array[i]));
+        }
     }
 }
