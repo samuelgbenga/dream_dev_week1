@@ -6,7 +6,7 @@ public class ArrayKata {
     public static void main(String[] args) {
         int[] array = {1, 2, 3, 4, 5};
         int[] array1 = {1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5};
-        int[] array2 = {1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5,  5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5,  5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5};
+        int[] array2 = {1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5,  5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5,  5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 3, 2};
         System.out.println(maximumIn(array));
         System.out.println(minimumIn(array));
         System.out.println(sumOf(array));
@@ -16,7 +16,9 @@ public class ArrayKata {
         System.out.println(Arrays.toString(noOfOddNumbersIn(array)));
         System.out.println(Arrays.toString(noOfEvenNumbersIn(array)));
         System.out.println(Arrays.toString(evenNumbersIn(array1)));
+        System.out.println(Arrays.toString(oddNumbersIn(array1)));
         System.out.println(Arrays.toString(evenNumbersIn(array2)));
+        System.out.println(Arrays.toString(oddNumbersIn(array2)));
     }
 
 
@@ -178,6 +180,27 @@ public class ArrayKata {
         return getActualSizeArray(result ,getActualSizeWithoutZeros(result));
     }
 
+    public static int[] oddNumbersIn(int[] arr) {
+        int[] result = new int[5];
+
+        if (arr == null) {
+            return result;
+        }
+
+        int count = 0;
+
+        for (int j : arr) {
+            if (j % 2 != 0) {
+                result[count] = j;
+                count++;
+            }
+            if((result.length - count) < 1) {
+                result = getNewArray(result);
+            };
+        }
+
+        return getActualSizeArray(result ,getActualSizeWithoutZeros(result));
+    }
     public static int[] getNewArray(int[] oldArray) {
         int[] newArray = new int[oldArray.length+5];
 
