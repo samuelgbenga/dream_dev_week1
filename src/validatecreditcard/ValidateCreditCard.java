@@ -9,7 +9,9 @@ public class ValidateCreditCard {
     static final int AMERICAN_EXPRESS_CARDS = 37;
     static final int DISCOVER_CARDS = 6;
     static String cardType;
-    static String cardNumber ="4388576018402626";
+    static int MAX_LEN = 16;
+    static int MIN_LEN = 13;
+    static String cardNumber ="5399831619690403";
 
 
 
@@ -18,20 +20,12 @@ public class ValidateCreditCard {
          Scanner input = new Scanner(System.in);
 
 
+        int[] arr = stringToIntArray();
+        int cardPrefix = (arr[0] == 3) ? arr[0]*10 + arr[1] : arr[0];
+        setCardType(cardPrefix);
+        String isValid = checkValidity(sumDoubleEveryOtherFromRight(arr), sumOddIndexedDigitsFromRightToLeft(arr));
+        System.out.print(cardReportTemplate(isValid));
 
-
-        System.out.println(Arrays.toString(stringToIntArray()));
-        System.out.println(sumDoubleEveryOtherFromRight(stringToIntArray()));
-        System.out.println(sumOddIndexedDigitsFromRightToLeft(stringToIntArray()));
-
-
-//        int cardPrefix = 37; // example
-//        setCardType(cardPrefix);
-//        System.out.println("Card Type: " + CARD_TYPE);
-
-//        int result = addUntilSingleDigit(7, 8); // 7 + 8 = 15 -> 1 + 5 = 6
-//        System.out.println(result); // Output: 6
-        //System.out.println(cardReportTemplate("Valid")); // Output: 6
     }
 
 
@@ -107,5 +101,12 @@ public class ValidateCreditCard {
             sum += digits[i];
         }
         return sum;
+    }
+
+    private static String checkValidity(int a, int b) {
+        int len = cardNumber.length();
+        if(len > MAX_LEN || len < MIN_LEN) return "Invalid";
+        int sum = a + b;
+        return (sum % 10 == 0) ? "Valid" : "Invalid";
     }
 }
