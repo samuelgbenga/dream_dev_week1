@@ -10,8 +10,7 @@ public class AjegunlePizza {
         final String AJEGUNLE_PIZZA = """
         ********************************************* 
                         Ajegunle Pizza
-        *********************************************
-        """;
+        *********************************************""";
         final String AJEGUNLE_PIZZA_PRICE = """
                        SELECT PIZZA TYPE
                        1 -> SAPA_SIZE
