@@ -19,6 +19,8 @@ public class ValidateCreditCard {
         //String input1 = "12345254467864";
          Scanner input = new Scanner(System.in);
 
+        System.out.println("Hello, Kindly enter card details to very ");
+        cardNumber = input.nextLine();
 
         int[] arr = stringToIntArray();
         int cardPrefix = (arr[0] == 3) ? arr[0]*10 + arr[1] : arr[0];
