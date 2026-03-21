@@ -9,8 +9,8 @@ public class ValidateCreditCard {
     static final int AMERICAN_EXPRESS_CARDS = 37;
     static final int DISCOVER_CARDS = 6;
     static String cardType;
-    static int MAX_LEN = 16;
-    static int MIN_LEN = 13;
+    static final int MAX_LEN = 16;
+    static final int MIN_LEN = 13;
     static String cardNumber ="5399831619690403";
 
 
