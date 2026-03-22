@@ -31,7 +31,7 @@ public class ValidateCreditCard {
     }
 
 
-    private static int[] stringToIntArray() {
+    public static int[] stringToIntArray() {
 
         int[] result = new int[cardNumber.length()];
 
@@ -76,7 +76,7 @@ public class ValidateCreditCard {
     }
 
 
-    private static int sumDoubleEveryOtherFromRight(int[] digits) {
+    public static int sumDoubleEveryOtherFromRight(int[] digits) {
         int sum = 0;
         int n = digits.length;
 
@@ -94,7 +94,7 @@ public class ValidateCreditCard {
         return sum;
     }
 
-    private static int sumOddIndexedDigitsFromRightToLeft(int[] digits) {
+    public static int sumOddIndexedDigitsFromRightToLeft(int[] digits) {
         int sum = 0;
         int n = digits.length;
 
@@ -105,7 +105,7 @@ public class ValidateCreditCard {
         return sum;
     }
 
-    private static String checkValidity(int a, int b) {
+    public static String checkValidity(int a, int b) {
         int len = cardNumber.length();
         if(len > MAX_LEN || len < MIN_LEN) return "Invalid";
         int sum = a + b;
