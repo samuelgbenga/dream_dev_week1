@@ -10,8 +10,11 @@ public class StudentManagement {
     static final int PASS_MARK = 50;
     static int hardestSubject = 0;
     static int easiestSubject = 0;
+    static int highestOverallSubject = 0;
     static int numberOfSuccess = Integer.MIN_VALUE;
     static int numberOfFailures = Integer.MIN_VALUE;
+    static int highestOverallScore = Integer.MIN_VALUE;
+    static String highestOverallStudent;
 
     public static void main(String[] args) {
 
@@ -219,7 +222,7 @@ public class StudentManagement {
 
             String report = buildSubjectReport(
                     subjectNumber,
-                    getHighestStudent(scores),
+                    getHighestStudent(scores, subjectNumber),
                     getHighestScore(scores),
                     getLowestStudent(scores),
                     getLowestScore(scores),
@@ -241,14 +244,20 @@ public class StudentManagement {
         return max;
     }
 
-    private static String getHighestStudent(int[] scores) {
+    private static String getHighestStudent(int[] scores, int subjectNumber) {
         int max = getHighestScore(scores);
+        String student = "N/A";
         for (int i = 0; i < scores.length; i++) {
             if (scores[i] == max) {
-                return "Student" + (i + 1);
+                student = "Student" + (i + 1);
             }
         }
-        return "N/A";
+        if(highestOverallScore < max){
+            highestOverallScore = max;
+            highestOverallStudent = student;
+            highestOverallSubject = subjectNumber;
+        }
+        return student;
     }
 
     private static int getLowestScore(int[] scores) {
@@ -310,11 +319,15 @@ public class StudentManagement {
         return String.format("""
             The hardest subject is subject%d with %d failures
             The easiest subject is subject%d with %d success
+            The overall Highest score is scored by %s in subject%d scoring %d
             """,
                 hardestSubject,
                 numberOfFailures,
                 easiestSubject,
-                numberOfSuccess
+                numberOfSuccess,
+                highestOverallStudent,
+                highestOverallSubject,
+                highestOverallScore
 
         );
     }
