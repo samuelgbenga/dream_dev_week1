@@ -33,13 +33,6 @@ public class StudentManagement {
                 Saving >>>>>>>>>>>>>>>>>>>>>>>>>>>
                 Saved successfully
                 """;
-      
-//        int[][] scores = {
-//                {51, 2, 4},
-//                {53, 2, 1},
-//                {43, 2, 4},
-//                {55, 2, 4}
-//        };
 
         System.out.println("How many student do you have?");
         numberOfStudents = Integer.parseInt(input.nextLine());
@@ -70,7 +63,7 @@ public class StudentManagement {
         bestGraduatingStudentTotalScore = getHighestTotalScore(totalStudentScore);
         worseGraduatingStudentTotalScore = getLowestTotalScore(totalStudentScore);
         sumOfTotalScores = getTotal(totalStudentScore);
-        sumOfAverageScores = getTotal(studentAverageScore);
+        sumOfAverageScores = (double) sumOfTotalScores/numberOfStudents;
 
         String result = buildResultTable(
                 studentArr,
@@ -348,14 +341,6 @@ public class StudentManagement {
     private static int getTotal(int[] arr) {
         int total = 0;
         for (int i : arr) {
-            total += i;
-        }
-        return total;
-    }
-
-    private static double getTotal(double[] arr) {
-        double total = 0;
-        for (double i : arr) {
             total += i;
         }
         return total;
