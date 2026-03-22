@@ -1,10 +1,12 @@
 package studentmanagment;
 
+import java.util.Scanner;
+
 public class StudentManagement {
 
 
-    static int numberOfStudents = 4;
-    static int numberOfSubjects = 3;
+    static int numberOfStudents;
+    static int numberOfSubjects;
     static final int PASS_MARK = 50;
     static int hardestSubject = 0;
     static int easiestSubject = 0;
@@ -25,22 +27,46 @@ public class StudentManagement {
 
     public static void main(String[] args) {
 
-      
-        int[][] scores = {
-                {51, 2, 4},
-                {53, 2, 1},
-                {43, 2, 4},
-                {55, 2, 4}
-        };
+        Scanner input = new Scanner(System.in);
 
+        final String saving ="""
+                Saving >>>>>>>>>>>>>>>>>>>>>>>>>>>
+                Saved successfully
+                """;
+      
+//        int[][] scores = {
+//                {51, 2, 4},
+//                {53, 2, 1},
+//                {43, 2, 4},
+//                {55, 2, 4}
+//        };
+
+        System.out.println("How many student do you have?");
+        numberOfStudents = Integer.parseInt(input.nextLine());
+
+        System.out.println("How many Subject Do they offer?");
+        numberOfSubjects = Integer.parseInt(input.nextLine());
+
+        System.out.println(saving);
 
         int[][] subjectScoreArr = new int[numberOfStudents][numberOfSubjects];
         String[] studentArr = new String[numberOfStudents];
-        double[] studentAverageScore = calculateAverages(scores);
-        int[] totalStudentScore = calculateTotals(scores);
+
+
+        for (int i = 0; i < subjectScoreArr.length; i++) {
+            for (int j = 0; j < subjectScoreArr[i].length; j++) {
+                System.out.println("Entering score for Student" + (i + 1) + " >>>>>>>");
+                System.out.println("Enter score for subject" + (j + 1));
+                subjectScoreArr[i][j] = Integer.parseInt(input.nextLine());
+                System.out.println(saving);
+            }
+        }
+
+        double[] studentAverageScore = calculateAverages(subjectScoreArr);
+        int[] totalStudentScore = calculateTotals(subjectScoreArr);
         int[] studentsPosition = calculatePositions(totalStudentScore);
         fillStudentNames(studentArr);
-        int[][] transposeScore = transpose(scores);
+        int[][] transposeScore = transpose(subjectScoreArr);
         bestGraduatingStudentTotalScore = getHighestTotalScore(totalStudentScore);
         worseGraduatingStudentTotalScore = getLowestTotalScore(totalStudentScore);
         sumOfTotalScores = getTotal(totalStudentScore);
@@ -48,7 +74,7 @@ public class StudentManagement {
 
         String result = buildResultTable(
                 studentArr,
-                scores,
+                subjectScoreArr,
                 totalStudentScore,
                 studentAverageScore,
                 studentsPosition
