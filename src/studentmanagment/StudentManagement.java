@@ -1,7 +1,5 @@
 package studentmanagment;
 
-import java.util.Arrays;
-
 public class StudentManagement {
 
 
@@ -10,11 +8,20 @@ public class StudentManagement {
     static final int PASS_MARK = 50;
     static int hardestSubject = 0;
     static int easiestSubject = 0;
-    static int highestOverallSubject = 0;
     static int numberOfSuccess = Integer.MIN_VALUE;
     static int numberOfFailures = Integer.MIN_VALUE;
     static int highestOverallScore = Integer.MIN_VALUE;
     static String highestOverallStudent;
+    static int highestOverallSubject = 0;
+    static int lowestOverallScore = Integer.MAX_VALUE;
+    static String lowestOverallStudent;
+    static int lowestOverallSubject = 0;
+    static String bestGraduatingStudent;
+    static int bestGraduatingStudentTotalScore;
+    static String worseGraduatingStudent;
+    static int worseGraduatingStudentTotalScore;
+    static int sumOfTotalScores;
+    static double sumOfAverageScores;
 
     public static void main(String[] args) {
 
@@ -34,14 +41,10 @@ public class StudentManagement {
         int[] studentsPosition = calculatePositions(totalStudentScore);
         fillStudentNames(studentArr);
         int[][] transposeScore = transpose(scores);
-
-
-        System.out.println(Arrays.toString(studentArr));
-
-
-        int[] totals = {7, 6, 11};
-        double[] averages = {2.33, 2.00, 3.67};
-        int[] positions = {2, 3, 1};
+        bestGraduatingStudentTotalScore = getHighestTotalScore(totalStudentScore);
+        worseGraduatingStudentTotalScore = getLowestTotalScore(totalStudentScore);
+        sumOfTotalScores = getTotal(totalStudentScore);
+        sumOfAverageScores = getTotal(studentAverageScore);
 
         String result = buildResultTable(
                 studentArr,
@@ -224,9 +227,9 @@ public class StudentManagement {
                     subjectNumber,
                     getHighestStudent(scores, subjectNumber),
                     getHighestScore(scores),
-                    getLowestStudent(scores),
+                    getLowestStudent(scores, subjectNumber),
                     getLowestScore(scores),
-                    getTotalScore(scores),
+                    getTotal(scores),
                     getAverageScore(scores),
                     getNumberOfPasses(scores, subjectNumber),
                     getNumberOfFails(scores, subjectNumber)
@@ -243,6 +246,35 @@ public class StudentManagement {
         }
         return max;
     }
+
+    private static int getHighestTotalScore(int[] scores) {
+        int max = scores[0];
+        int counter = 0;
+        for (int score : scores) {
+            counter++;
+            if (score > max){
+                max = score;
+                bestGraduatingStudent = "Student" + counter;
+            }
+
+        }
+        return max;
+    }
+
+    private static int getLowestTotalScore(int[] scores) {
+        int min = scores[0];
+        int counter = 0;
+        for (int score : scores) {
+            counter++;
+            if (score < min) {
+                min = score;
+                worseGraduatingStudent = "Student" + counter;
+            }
+        }
+
+        return min;
+    }
+
 
     private static String getHighestStudent(int[] scores, int subjectNumber) {
         int max = getHighestScore(scores);
@@ -265,29 +297,44 @@ public class StudentManagement {
         for (int score : scores) {
             if (score < min) min = score;
         }
+
         return min;
     }
 
-    private static String getLowestStudent(int[] scores) {
+    private static String getLowestStudent(int[] scores, int subjectNumber) {
         int min = getLowestScore(scores);
+        String student = "N/A";
         for (int i = 0; i < scores.length; i++) {
             if (scores[i] == min) {
-                return "Student" + (i + 1);
+                student = "Student" + (i + 1);
             }
         }
-        return "N/A";
+        if(lowestOverallScore > min){
+            lowestOverallScore = min;
+            lowestOverallStudent = student;
+            lowestOverallSubject = subjectNumber;
+        }
+        return student;
     }
 
-    private static int getTotalScore(int[] scores) {
+    private static int getTotal(int[] arr) {
         int total = 0;
-        for (int score : scores) {
-            total += score;
+        for (int i : arr) {
+            total += i;
+        }
+        return total;
+    }
+
+    private static double getTotal(double[] arr) {
+        double total = 0;
+        for (double i : arr) {
+            total += i;
         }
         return total;
     }
 
     private static double getAverageScore(int[] scores) {
-        int total = getTotalScore(scores);
+        int total = getTotal(scores);
         return (double) total / scores.length;
     }
 
@@ -320,6 +367,22 @@ public class StudentManagement {
             The hardest subject is subject%d with %d failures
             The easiest subject is subject%d with %d success
             The overall Highest score is scored by %s in subject%d scoring %d
+            The overall Lowest score is scored by %s in subject%d scoring %d
+            =================================================================
+            
+            Class summary
+            =================================================================
+            Best Graduating Student is: %s scoring %d
+            =================================================================
+            
+            !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            Worse Graduating Student is: %s scoring %d
+            !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            
+            =================================================================
+            Class Total Score is: %d
+            Class Average Score is: %.2f
+            =================================================================
             """,
                 hardestSubject,
                 numberOfFailures,
@@ -327,7 +390,16 @@ public class StudentManagement {
                 numberOfSuccess,
                 highestOverallStudent,
                 highestOverallSubject,
-                highestOverallScore
+                highestOverallScore,
+                lowestOverallStudent,
+                lowestOverallSubject,
+                lowestOverallScore,
+                bestGraduatingStudent,
+                bestGraduatingStudentTotalScore,
+                worseGraduatingStudent,
+                worseGraduatingStudentTotalScore,
+                sumOfTotalScores,
+                sumOfAverageScores
 
         );
     }
