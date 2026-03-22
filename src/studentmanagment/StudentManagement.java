@@ -276,6 +276,7 @@ public class StudentManagement {
     private static int getHighestTotalScore(int[] scores) {
         int max = scores[0];
         int counter = 0;
+        bestGraduatingStudent = "Student" + 1;
         for (int score : scores) {
             counter++;
             if (score > max){
@@ -290,6 +291,7 @@ public class StudentManagement {
     private static int getLowestTotalScore(int[] scores) {
         int min = scores[0];
         int counter = 0;
+        worseGraduatingStudent = "Student" + 1;
         for (int score : scores) {
             counter++;
             if (score < min) {
