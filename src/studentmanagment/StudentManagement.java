@@ -8,15 +8,19 @@ public class StudentManagement {
     static int numberOfStudents = 4;
     static int numberOfSubjects = 3;
     static final int PASS_MARK = 50;
+    static int hardestSubject = 0;
+    static int easiestSubject = 0;
+    static int numberOfSuccess = Integer.MIN_VALUE;
+    static int numberOfFailures = Integer.MIN_VALUE;
 
     public static void main(String[] args) {
 
       
         int[][] scores = {
-                {1, 2, 4},
-                {3, 2, 1},
-                {5, 2, 4},
-                {5, 2, 4}
+                {51, 2, 4},
+                {53, 2, 1},
+                {43, 2, 4},
+                {55, 2, 4}
         };
 
 
@@ -47,6 +51,9 @@ public class StudentManagement {
         System.out.println(result);
 
         loopThroughTheScore(transposeScore);
+
+        System.out.println(overAllSummary());
+
     }
 
 
@@ -205,7 +212,6 @@ public class StudentManagement {
     private static void loopThroughTheScore(int[][] array) {
 
         System.out.println("SUBJECT SUMMARY");
-
         for (int i = 0; i < array.length; i++) {
 
             int subjectNumber = i + 1;
@@ -219,8 +225,8 @@ public class StudentManagement {
                     getLowestScore(scores),
                     getTotalScore(scores),
                     getAverageScore(scores),
-                    getNumberOfPasses(scores),
-                    getNumberOfFails(scores)
+                    getNumberOfPasses(scores, subjectNumber),
+                    getNumberOfFails(scores, subjectNumber)
             );
 
             System.out.println(report);
@@ -239,7 +245,7 @@ public class StudentManagement {
         int max = getHighestScore(scores);
         for (int i = 0; i < scores.length; i++) {
             if (scores[i] == max) {
-                return "Student " + (i + 1);
+                return "Student" + (i + 1);
             }
         }
         return "N/A";
@@ -257,7 +263,7 @@ public class StudentManagement {
         int min = getLowestScore(scores);
         for (int i = 0; i < scores.length; i++) {
             if (scores[i] == min) {
-                return "Student " + (i + 1);
+                return "Student" + (i + 1);
             }
         }
         return "N/A";
@@ -276,19 +282,40 @@ public class StudentManagement {
         return (double) total / scores.length;
     }
 
-    private static int getNumberOfPasses(int[] scores) {
+    private static int getNumberOfPasses(int[] scores, int subjectNumber) {
         int count = 0;
         for (int score : scores) {
             if (score >= PASS_MARK) count++;
         }
+        if(numberOfSuccess < count ){
+            numberOfSuccess = count;
+            easiestSubject = subjectNumber;
+        }
         return count;
     }
 
-    private static int getNumberOfFails(int[] scores) {
+    private static int getNumberOfFails(int[] scores, int subjectNumber) {
         int count = 0;
         for (int score : scores) {
             if (score < PASS_MARK) count++;
         }
+        if(numberOfFailures < count ){
+            numberOfFailures = count;
+            hardestSubject = subjectNumber;
+        }
         return count;
+    }
+
+    private static String overAllSummary() {
+        return String.format("""
+            The hardest subject is subject%d with %d failures
+            The easiest subject is subject%d with %d success
+            """,
+                hardestSubject,
+                numberOfFailures,
+                easiestSubject,
+                numberOfSuccess
+
+        );
     }
 }
