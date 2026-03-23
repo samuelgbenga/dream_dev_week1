@@ -1,12 +1,13 @@
 package mondayTwentyThreeAssessment.personproblem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Person {
 
     private String fullName;
 
-    private List<Problem> problemList;
+    private List<Problem> problemList = new ArrayList<>();
 
 
     public Person(String fullName){

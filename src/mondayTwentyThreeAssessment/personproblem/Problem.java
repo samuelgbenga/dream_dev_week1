@@ -6,7 +6,7 @@ public class Problem {
 
     private String type;
 
-    private boolean isSolved;
+    public boolean isSolved;
 
 
     public Problem(String name, String type){
