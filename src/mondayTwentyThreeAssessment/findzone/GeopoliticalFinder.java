@@ -1,9 +1,22 @@
 package mondayTwentyThreeAssessment.findzone;
 
+import java.util.Scanner;
+
 public class GeopoliticalFinder {
 
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
+        System.out.print("Enter a Nigerian state: ");
+        String input = scanner.nextLine();
+
+        Zone zone = getZone(input);
+
+        if (zone == Zone.UNKNOWN) {
+            System.out.println("State not found. Please check your spelling.");
+        } else {
+            System.out.println(input + " belongs to the " + zone + " geo-political zone.");
+        }
     }
 
 
