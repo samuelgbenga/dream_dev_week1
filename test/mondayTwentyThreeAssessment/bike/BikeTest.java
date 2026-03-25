@@ -1,9 +1,8 @@
 package mondayTwentyThreeAssessment.bike;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BikeTest {
 
@@ -15,7 +14,18 @@ public class BikeTest {
     @Test
     void turnOnTheBike() {
 
-        assertTrue(bike.turnedOn());
+        bike.setIsTurnedOnToOn();
+        assertTrue(bike.getIsTurnedOn());
+    }
+
+    @Test
+    void turnOffTheBike() {
+        bike.setIsTurnedOnToOff();
+        assertFalse(bike.getIsTurnedOn());
+    }
+
+    @Test
+    void changeGear(){
 
     }
 }
