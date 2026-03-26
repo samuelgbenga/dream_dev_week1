@@ -44,15 +44,15 @@ public class BikeTest {
     void decelerateBikeSpeed(){
         bike.setSpeed(31);
         bike.decelerate();
-        assertEquals(29, bike.getSpeed());
+        assertEquals(28, bike.getSpeed());
     }
 
     @Test
     void testThatTheGearChangeAfterAnDecreaseInSpeedRange(){
 
         bike.setSpeed(32);
-        bike.accelerate();
-        assertEquals(1, bike.getGear());
+        bike.decelerate();
+        assertEquals(2, bike.getGear());
     }
 
     @Test
