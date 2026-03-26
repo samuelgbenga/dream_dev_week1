@@ -6,11 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BikeTest {
 
-
         Bike bike = new Bike();
-
-
-
     @Test
     void turnOnTheBike() {
 
