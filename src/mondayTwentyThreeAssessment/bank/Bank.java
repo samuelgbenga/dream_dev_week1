@@ -1,5 +1,8 @@
 package mondayTwentyThreeAssessment.bank;
 
+import mondayTwentyThreeAssessment.bank.exceptions.InsufficientBalanceException;
+import mondayTwentyThreeAssessment.bank.exceptions.InvalidNameException;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +27,7 @@ public class Bank {
     }
 
     public void deposit(int number, BigDecimal amount){
+        getAccount(number).deposit(amount);
 
     }
 
@@ -32,7 +36,8 @@ public class Bank {
     }
 
     public BigDecimal checkBalance(int number, String pin){
-        return null;
+        Account account = getAccount(number);
+        return account.checkBalance(pin);
     }
 
     public void createAccount(String name, String pin){
@@ -42,9 +47,16 @@ public class Bank {
     }
 
     public int getAccountList(){
-        int num = accounts.size();
-        System.out.println(num);
-        return num ;
+        return accounts.size();
+    }
+
+    private Account getAccount(int number){
+        for(Account a : accounts){
+            if(a.getAccountNumber() == number){
+                return a;
+            }
+        }
+        throw new InvalidNameException("Invalid Account Number");
     }
 
 }

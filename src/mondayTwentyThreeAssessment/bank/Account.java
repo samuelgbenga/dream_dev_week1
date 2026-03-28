@@ -7,11 +7,12 @@ import mondayTwentyThreeAssessment.bank.exceptions.*;
 import java.math.BigDecimal;
 
 public class Account {
-    private final String pin;
-    private final String name;
-    private final int number;
+    private  String pin;
+    private  String name;
+    private  int number;
 
     private BigDecimal balance = new BigDecimal(0);
+
 
     public Account(String pin, String name, int number) {
         this.pin = pin;
@@ -19,9 +20,10 @@ public class Account {
         this.number = number;
     }
 
-    public BigDecimal checkBalance(String pin, String name) {
+    public Account(){};
+
+    public BigDecimal checkBalance(String pin) {
         validatePin(pin);
-        validateName(name);
         return balance;
     }
 
@@ -67,10 +69,15 @@ public class Account {
         validateNumber(number);
     }
 
+    public int getAccountNumber(){
+        return number;
+    }
+
     private void validateWithdraw(BigDecimal amount) {
         validateAmount(amount);
         if (amount.compareTo(balance) > 0) {
             throw new InsufficientBalanceException("Insufficient funds");
         }
     }
+
 }

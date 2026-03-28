@@ -15,7 +15,6 @@ public class BankTest {
     private int srcNumber;
     private BigDecimal bigDecimal;
     private String name;
-    private int number;
     Bank bank;
 
     @BeforeEach
@@ -25,7 +24,7 @@ public class BankTest {
         srcNumber = 12345;
         pin = "1234";
         bigDecimal= new BigDecimal(100);
-        //account = new Account(pin, name, number);
+
          bank = new Bank("Samuel Bank");
     }
 
@@ -37,4 +36,13 @@ public class BankTest {
         assertEquals(1, bank.getAccountList());
 
     }
+
+    @Test
+    public void deposit_money_in_account(){
+        bank.createAccount(name, pin);
+        bank.deposit(1234, new BigDecimal(100));
+        assertEquals(new BigDecimal(100), bank.checkBalance(1234, pin));
+    }
+
+
 }
