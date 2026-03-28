@@ -73,6 +73,14 @@ public class Account {
         return number;
     }
 
+    public void decreaseByAmount(BigDecimal amount){
+        balance = balance.subtract(amount);
+    }
+
+    public void increaseByAmount(BigDecimal amount){
+        balance = balance.add(amount);
+    }
+
     private void validateWithdraw(BigDecimal amount) {
         validateAmount(amount);
         if (amount.compareTo(balance) > 0) {

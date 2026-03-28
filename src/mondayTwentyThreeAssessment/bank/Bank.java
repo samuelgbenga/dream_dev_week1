@@ -21,9 +21,11 @@ public class Bank {
     }
 
     public void transfer(int srcNumber, int desNumber, BigDecimal amount, String pin){
-
-
-
+        Account srcAccount = getAccount(srcNumber);
+        srcAccount.validatePin(pin);
+        srcAccount.decreaseByAmount(amount);
+        Account desAccount = getAccount(desNumber);
+        desAccount.increaseByAmount(amount);
     }
 
     public void deposit(int number, BigDecimal amount){
@@ -32,6 +34,9 @@ public class Bank {
     }
 
     public void withdraw(int number, BigDecimal amount, String pin){
+        Account account = getAccount(number);
+        account.validatePin(pin);
+        account.decreaseByAmount(amount);
 
     }
 
@@ -40,8 +45,8 @@ public class Bank {
         return account.checkBalance(pin);
     }
 
-    public void createAccount(String name, String pin){
-        Account account = new Account(pin, name, 1234);
+    public void createAccount(String name, String pin, int number){
+        Account account = new Account(pin, name, number);
         accounts.add(account);
 
     }
