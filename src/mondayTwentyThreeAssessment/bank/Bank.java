@@ -33,10 +33,9 @@ public class Bank {
 
     }
 
-    public void withdraw(int number, BigDecimal amount, String pin){
+    public void withdraw(int number, BigDecimal amount, String name, String pin){
         Account account = getAccount(number);
-        account.validatePin(pin);
-        account.decreaseByAmount(amount);
+        account.withdraw(amount, pin, name , number);
 
     }
 

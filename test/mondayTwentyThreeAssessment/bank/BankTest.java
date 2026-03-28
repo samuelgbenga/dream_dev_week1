@@ -52,7 +52,7 @@ public class BankTest {
     public void withdraw_from_account(){
         bank.createAccount(name, pin, srcNumber);
         bank.deposit(srcNumber, new BigDecimal(100));
-        bank.withdraw(srcNumber, new BigDecimal(50), pin);
+        bank.withdraw(srcNumber, new BigDecimal(50), name, pin);
         assertEquals(new BigDecimal(50), bank.checkBalance(srcNumber, pin));
     }
 
